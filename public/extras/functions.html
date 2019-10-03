@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>functions</title>
+</head>
+
+<body>
+
+    <script>
+    </script>
+
+    <script>
+        example1("Henderson", 74);
+
+        function example1() {
+            console.log('ex1', arguments);
+        }
+
+        example1("Jason", 47);
+
+        let example2 = function() {
+            console.log('ex2', arguments);
+
+            return function() {
+                console.log('ex3', arguments);
+            };
+        }("Billy", 100)
+
+        console.log(example2);
+
+        example2("Tina", 10);
+        
+        example2 = function() {
+    </script>
+
+</body>
+
+</html>
