@@ -28,4 +28,4 @@ app.use(function(req, res, next) {
 
 console.log('listening on port', constants.port)
 
-app.listen(constants.port)
+app.listen(constants.porxt)
