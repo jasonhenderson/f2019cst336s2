@@ -25,11 +25,15 @@ var indexRouter = require('./routes/index');
 var cartRouter = require('./routes/cart');
 var usersRouter = require('./routes/users');
 var lookupRouter = require('./routes/lookup');
+// For exercises
+var routingExerciseRouter = require('./routes/exercises/routing');
 
 app.use('/', indexRouter);
 app.use('/cart', cartRouter);
 app.use('/users', usersRouter);
 app.use('/lookup', lookupRouter);
+// For exercises
+app.use('/exercises/routing', routingExerciseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

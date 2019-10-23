@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+// Url is /cart/item/add
 router.post('/item/add', function(req, res, next) {  
   const itemId = req.query.itemId;
 
