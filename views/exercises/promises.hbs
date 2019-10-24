@@ -1,0 +1,31 @@
+<script>
+    // 0. Random number between start and end
+    function getRandomNumber(start, end) {
+        return Math.floor(Math.random() * ((end-start)+1) + start);
+    }
+    console.log('random number', getRandomNumber(0, 5));
+
+    // 1. Make synchronous function call using return
+    function getFullName(first, last) {
+        let fullName = `${first} ${last}`;
+        return fullName;
+    }
+    
+    let fullName = getFullName('Jason', 'Henderson');
+    
+    console.log('(sync, return): full name is', fullName);
+    
+    // 2. Return with fake "by ref" object
+    function getFullNameByRef(first, last, output) {
+        let fullName = `${first} ${last}`;
+        output.value = fullName;
+    }
+    
+    let output = {};
+    getFullNameByRef('Jason', 'Henderson', output);
+    let fullNameByRef = output.value;
+    
+    console.log('(sync, by ref): full name is', fullNameByRef);
+    
+    
+</script>

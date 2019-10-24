@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "./node_modules/.bin/nodemon ./bin/www",
     "ugle": "ls -al"
   },
   "dependencies": {
@@ -20,5 +20,8 @@
       "node": true,
       "jquery": true
     }
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }
