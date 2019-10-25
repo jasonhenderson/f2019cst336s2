@@ -2,6 +2,7 @@
     "env": {
       "browser": true,
       "node": true,
-      "jquery": true
+      "jquery": true,
+      "promise": true
     }
 }
