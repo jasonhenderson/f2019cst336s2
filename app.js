@@ -25,12 +25,14 @@ var indexRouter = require('./routes/index');
 var cartRouter = require('./routes/cart');
 var usersRouter = require('./routes/users');
 var lookupRouter = require('./routes/lookup');
+var mysqlRouter = require('./public/examples/mysql/router');
 
 // For exercises
 var routingExerciseRouter = require('./routes/exercises/routing');
 var exerciseRouter = require('./routes/exercises/index');
 
 app.use('/', indexRouter);
+app.use('/mysql', mysqlRouter);
 app.use('/cart', cartRouter);
 app.use('/users', usersRouter);
 app.use('/lookup', lookupRouter);
