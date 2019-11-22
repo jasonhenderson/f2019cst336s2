@@ -3,8 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 
 var app = express();
+
+// Setup sessions
+app.use(session({
+  'secret': 'Kfv34cz2WC'
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,23 +31,26 @@ var indexRouter = require('./routes/index');
 var cartRouter = require('./routes/cart');
 var usersRouter = require('./routes/users');
 var lookupRouter = require('./routes/lookup');
-var mysqlRouter = require('./public/examples/mysql/router');
-var lab9Router = require('./public/labs/9/router');
-var lab10Router = require('./public/labs/10/router');
+app.use('/', indexRouter);
+app.use('/cart', cartRouter);
+app.use('/users', usersRouter);
+app.use('/lookup', lookupRouter);
 
 // For exercises
 var routingExerciseRouter = require('./routes/exercises/routing');
 var exerciseRouter = require('./routes/exercises/index');
-
-app.use('/', indexRouter);
-app.use('/mysql', mysqlRouter);
-app.use('/cart', cartRouter);
-app.use('/users', usersRouter);
-app.use('/lookup', lookupRouter);
-// For exercises
 app.use('/exercises/routing', routingExerciseRouter);
 app.use('/exercises', exerciseRouter);
+
+// For examples
+var mysqlExampleRouter = require('./public/examples/mysql/router');
+var authExampleRouter = require('./public/examples/auth/router');
+app.use('/mysql', mysqlExampleRouter);
+app.use('/auth', authExampleRouter);
+
 // For labs
+var lab9Router = require('./public/labs/9/router');
+var lab10Router = require('./public/labs/10/router');
 app.use('/lab/9', lab9Router);
 app.use('/lab/10', lab10Router);
 
