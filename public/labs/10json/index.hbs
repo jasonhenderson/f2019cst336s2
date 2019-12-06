@@ -1,0 +1,128 @@
+<h1>{{title}}</h1>
+<p>What are all the quotes?</p>
+<!-- DO THIS WITH FLEXBOX OR BOOTSTRAP GRID INSTEAD OF TABLE-->
+<table>
+    <thead>
+        <tr>
+            <th>quote</th>
+            <th>category</th>
+            <th>author</th>
+            <th>
+                <a class="btn btn-info" data-toggle="modal" data-target="#editModal">Add Quote</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each quotes}}
+        <tr>
+            <td class="w-50">{{quote}}</td>
+            <td class="w-25">{{category}}</td>
+            <td>{{fullName}}</td>
+            <td>
+                <a class="btn btn-edit btn-primary" data-quoteid={{quoteId}}>Edit</a>
+                <a class="btn btn-delete btn-danger" data-quoteid={{quoteId}}>Delete</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add or Edit Quote</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="authorId">Author ID</label>
+                        <input type="text" class="form-control" id="authorId" aria-describedby="authorIdHelp" placeholder="Enter Author ID" value={{data.authorId}}>
+                        <input type="hidden" id="quoteId" value="{{data.quoteId}}" />
+                        <small id="authorIdHelp" class="form-text text-muted">Use an known author ID.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="quote">Quote</label>
+                        <textarea class="form-control" id="quote" aria-describedby="quoteHelp" placeholder="Enter Quote Text">{{data.quote}}</textarea>
+                        <small id="quoteHelp" class="form-text text-muted">Put the quote in here</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <input type="text" class="form-control" id="category" aria-describedby="categoryHelp" placeholder="Enter Quote Category" value={{data.category}}>
+                        <small id="categoryHelp" class="form-text text-muted">General category, e.g Humor, Wisdom, Religious.</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(".btn-edit").on('click', function(e) {
+            e.preventDefault();
+            var quoteId = $(e.target).data('quoteid');
+            console.log('quote id', quoteId);
+            //$('#authorId').val()
+            // TODO: make AJAX call, get the quote and then populate in the modal
+            // THEN open the modal like below
+            $('#editModal').modal('toggle');
+        });
+
+        $("#saveButton").on('click', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "/lab/10/quotes/edit",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "quoteId": $("#quoteId").val(),
+                    "authorId": $("#authorId").val(),
+                    "quote": $("#quote").val(),
+                    "category": $("#category").val()
+                }),
+                success: function(data, status) {
+                    $("#id").val(data.id);
+                    window.location.href = "/lab/10/quotes";
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                },
+                complete: function(data, status) { //optional, used for debugging purposes
+                    //console.log(status);
+                }
+            });
+        });
+    });
+</script>
